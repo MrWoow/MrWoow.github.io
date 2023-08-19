@@ -1,0 +1,14 @@
+{
+  "printWidth": 400,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "quoteProps": "as-needed",
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "always",
+  "endOfLine": "auto",
+  "embeddedLanguageFormatting": "auto" //对引用代码进行格式化
+}
