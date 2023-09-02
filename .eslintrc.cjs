@@ -29,6 +29,24 @@ module.exports = {
     "quotes": [1, "double"],
     "no-unused-vars": 0,
     "linebreak-style": 0,
+    "vue/no-unused-vars": 0,
+    "arrow-body-style": [2, "always"],
+    "object-curly-newline": [
+      2,
+      {
+        "ObjectExpression": "always",
+        "ObjectPattern": {
+          "multiline": true
+        },
+        "ImportDeclaration": "never",
+        "ExportDeclaration": {
+          "multiline": true,
+          "minProperties": 3
+        }
+      }
+    ],
+    "no-plusplus": 0,
+    "no-param-reassign": 0,
 
     "vue/multi-word-component-names": [
       2,

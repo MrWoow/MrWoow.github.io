@@ -7,13 +7,16 @@
       <el-aside width="300px">
         <side-bar />
       </el-aside>
-      <el-main height="" />
+      <el-main class="center-flex">
+        <main-container />
+      </el-main>
     </el-container>
   </div>
 </template>
 
 <script setup>
 import SideBar from "./components/SideBar.vue";
+import MainContainer from "./components/MainContainer.vue";
 </script>
 <style lang="less" scoped>
 #WTK-admin {

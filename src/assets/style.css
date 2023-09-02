@@ -4,3 +4,9 @@ html,
   height: 100%;
   width: 100%;
 }
+
+.center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

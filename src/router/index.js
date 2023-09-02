@@ -1,4 +1,8 @@
+import "nprogress/nprogress.css";
+
 import { createRouter, createWebHistory } from "vue-router";
+import NProgress from "nprogress";
+import WTKRoutes from "./WTK.js";
 
 const constRoutes = [
   {
@@ -28,23 +32,6 @@ const constRoutes = [
   }
 ];
 
-const WTKRoutes = [
-  {
-    "path": "/WTK",
-    "redirect": "/WTK/display"
-  },
-  {
-    "path": "/WTK/display",
-    "name": "WTK-display",
-    "component": () => import("@WTK/views/display/index.vue")
-  },
-  {
-    "path": "/WTK/admin",
-    "name": "WTK-admin",
-    "component": () => import("@WTK/views/admin/index.vue")
-  }
-];
-
 const lastRoutes = [
   {
     "path": "/:catchAll(.*)",
@@ -57,6 +44,13 @@ const finalRoutes = constRoutes.concat(WTKRoutes, lastRoutes);
 const router = createRouter({
   "history": createWebHistory(),
   "routes": finalRoutes
+});
+
+router.beforeEach(() => {
+  NProgress.start();
+});
+router.afterEach(() => {
+  NProgress.done();
 });
 
 export default router;
