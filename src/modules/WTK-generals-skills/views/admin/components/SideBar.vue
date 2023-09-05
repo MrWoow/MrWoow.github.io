@@ -169,7 +169,7 @@
              title="关键词"
              align-center
              width="25%">
-    <el-input ref="tagNameInputRef"
+    <el-input ref="keywordNameInputRef"
               v-model="addOrModifyKeywordJSON.name"
               placeholder="请输入"
               @keyup.enter="addOrModifyKeywordJSON.whenDone" />
@@ -201,21 +201,98 @@ import { ElMessage, ElMessageBox } from "element-plus";
 const defaultStore = useStore();
 const tempKey = ref(1);
 let addOrModifyTagJSON = reactive({
-  "name": "",
   "dialogVisible": false
 });
-const addOrModifyKeywordJSON = reactive({
-  "name": "",
-  "value": "",
+let addOrModifyKeywordJSON = reactive({
   "dialogVisible": false
 });
 const tagNameInputRef = ref();
+const keywordNameInputRef = ref();
 
+const addKeywordToList = () => {
+  if (isEmpty(addOrModifyKeywordJSON.name) || isEmpty(addOrModifyKeywordJSON.value)) {
+    ElMessage({
+      "message": "不能为空",
+      "type": "error"
+    });
+    return;
+  }
+  if (isDuplicated(addOrModifyKeywordJSON.name, addOrModifyKeywordJSON.list, "name")) {
+    ElMessage({
+      "message": "不能重复",
+      "type": "error"
+    });
+    return;
+  }
+  const tempKeyword = {
+    "name": addOrModifyKeywordJSON.name,
+    "value": addOrModifyKeywordJSON.value,
+    "id": new Date().getTime().toString(),
+    "isTop": addOrModifyKeywordJSON.list.length === 0
+  };
+  addOrModifyKeywordJSON.list.push(tempKeyword);
+  addOrModifyKeywordJSON.dialogVisible = false;
+  ElMessage({
+    "message": "操作成功",
+    "type": "success"
+  });
+};
 const openAddKeywordDialog = (list) => {
-  // TODO:
+  addOrModifyKeywordJSON = reactive({
+    "name": "",
+    "value": "",
+    "list": list,
+    "dialogVisible": true,
+    "whenDone": addKeywordToList
+  });
+  tempKey.value += 1;
+  nextTick(() => {
+    keywordNameInputRef.value.focus();
+  });
+};
+const modifyKeywordInList = () => {
+  if (isEmpty(addOrModifyKeywordJSON.name) || isEmpty(addOrModifyKeywordJSON.value)) {
+    ElMessage({
+      "message": "不能为空",
+      "type": "error"
+    });
+    return;
+  }
+  if (addOrModifyKeywordJSON.name === addOrModifyKeywordJSON.item.name && addOrModifyKeywordJSON.value === addOrModifyKeywordJSON.item.value) {
+    ElMessage({
+      "message": "无修改",
+      "type": "warning"
+    });
+    return;
+  }
+  if (isDuplicated(addOrModifyKeywordJSON.name, addOrModifyKeywordJSON.list, "name")) {
+    ElMessage({
+      "message": "不能重复",
+      "type": "error"
+    });
+    return;
+  }
+  addOrModifyKeywordJSON.item.name = addOrModifyKeywordJSON.name;
+  addOrModifyKeywordJSON.item.value = addOrModifyKeywordJSON.value;
+  addOrModifyKeywordJSON.dialogVisible = false;
+  ElMessage({
+    "message": "操作成功",
+    "type": "success"
+  });
 };
 const openModifyKeywordDialog = (item, list) => {
-  // TODO:
+  addOrModifyKeywordJSON = reactive({
+    "item": item,
+    "name": item.name,
+    "value": item.value,
+    "list": list,
+    "dialogVisible": true,
+    "whenDone": modifyKeywordInList
+  });
+  tempKey.value += 1;
+  nextTick(() => {
+    keywordNameInputRef.value.focus();
+  });
 };
 const isEmpty = (value) => {
   return value === "" || value === null || value === undefined;

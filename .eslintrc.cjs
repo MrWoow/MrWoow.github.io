@@ -47,6 +47,7 @@ module.exports = {
     ],
     "no-plusplus": 0,
     "no-param-reassign": 0,
+    "no-use-before-define": [0],
 
     "vue/multi-word-component-names": [
       2,
