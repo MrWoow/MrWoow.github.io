@@ -110,36 +110,39 @@
              class="custom-el-tree"
              :expand-on-click-node="false">
       <template #default="{ node, data }">
-        <div class="tree-node first-level-tree-node">
-          <span class="first-level-name">{{ data.name }}</span>
-          <div class="button-container">
-            <el-tooltip content="上移"
-                        placement="bottom"
-                        :show-after="500"
-                        :hide-after="0">
-              <el-button style="padding: 4px; height: auto"
-                         :icon="Top"
-                         :disabled="data.isTop"
-                         @click="moveUpThisItemInList(data, defaultStore.keywordList, 'id')" />
-            </el-tooltip>
-            <el-tooltip content="编辑"
-                        placement="bottom"
-                        :show-after="500"
-                        :hide-after="0">
-              <el-button style="padding: 4px; height: auto"
-                         :icon="Edit"
-                         @click="openModifyKeywordDialog(data, defaultStore.keywordList)" />
-            </el-tooltip>
-            <el-tooltip content="删除"
-                        placement="bottom"
-                        :show-after="500"
-                        :hide-after="0">
-              <el-button style="padding: 4px; height: auto"
-                         :icon="Delete"
-                         @click="deleteItemInList(data, defaultStore.tagList)" />
-            </el-tooltip>
+        <el-tooltip :content="data.value"
+                    placement="right">
+          <div class="tree-node first-level-tree-node">
+            <span class="first-level-name">{{ data.name }}</span>
+            <div class="button-container">
+              <el-tooltip content="上移"
+                          placement="bottom"
+                          :show-after="500"
+                          :hide-after="0">
+                <el-button style="padding: 4px; height: auto"
+                           :icon="Top"
+                           :disabled="data.isTop"
+                           @click="moveUpThisItemInList(data, defaultStore.keywordList, 'id')" />
+              </el-tooltip>
+              <el-tooltip content="编辑"
+                          placement="bottom"
+                          :show-after="500"
+                          :hide-after="0">
+                <el-button style="padding: 4px; height: auto"
+                           :icon="Edit"
+                           @click="openModifyKeywordDialog(data, defaultStore.keywordList)" />
+              </el-tooltip>
+              <el-tooltip content="删除"
+                          placement="bottom"
+                          :show-after="500"
+                          :hide-after="0">
+                <el-button style="padding: 4px; height: auto"
+                           :icon="Delete"
+                           @click="deleteItemInList(data, defaultStore.tagList)" />
+              </el-tooltip>
+            </div>
           </div>
-        </div>
+        </el-tooltip>
       </template>
     </el-tree>
   </el-scrollbar>
@@ -171,12 +174,13 @@
              width="25%">
     <el-input ref="keywordNameInputRef"
               v-model="addOrModifyKeywordJSON.name"
-              placeholder="请输入"
+              placeholder="请输入关键词"
+              style="margin-bottom: 15px;"
               @keyup.enter="addOrModifyKeywordJSON.whenDone" />
     <el-input v-model="addOrModifyKeywordJSON.value"
               autosize
               type="textarea"
-              placeholder="请输入"
+              placeholder="请输入解释"
               @keyup.enter="addOrModifyKeywordJSON.whenDone" />
     <template #footer>
       <div class="button-container">
@@ -265,7 +269,7 @@ const modifyKeywordInList = () => {
     });
     return;
   }
-  if (isDuplicated(addOrModifyKeywordJSON.name, addOrModifyKeywordJSON.list, "name")) {
+  if (addOrModifyKeywordJSON.name !== addOrModifyKeywordJSON.item.name && isDuplicated(addOrModifyKeywordJSON.name, addOrModifyKeywordJSON.list, "name")) {
     ElMessage({
       "message": "不能重复",
       "type": "error"
