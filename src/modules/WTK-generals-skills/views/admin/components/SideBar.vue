@@ -203,13 +203,15 @@ import { nextTick, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
 const defaultStore = useStore();
-const tempKey = ref(1);
+
 let addOrModifyTagJSON = reactive({
   "dialogVisible": false
 });
 let addOrModifyKeywordJSON = reactive({
   "dialogVisible": false
 });
+
+const tempKey = ref(1);
 const tagNameInputRef = ref();
 const keywordNameInputRef = ref();
 
